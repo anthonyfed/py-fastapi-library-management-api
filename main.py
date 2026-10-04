@@ -38,13 +38,6 @@ def read_authors(
 @app.get("/authors/{author_id}", response_model=schemas.Author)
 def read_author(
         author_id: int,
-        db: Session = Depends(get_db)
-) -> models.Author:
-    return crud.get_author(db=db, author_id=author_id)
-
-@app.get("/authors/{author_id}", response_model=schemas.Author)
-def read_author(
-        author_id: int,
         db: Session = Depends(get_db),
 ) -> models.Author:
     db_author = crud.get_author(
@@ -93,7 +86,7 @@ def read_books(
         limit=limit
     )
 
-@app.get("/authors/{author_id}/books", response_model=schemas.Book)
+@app.get("/authors/{author_id}/books", response_model=list[schemas.Book])
 def read_author_books(
         author_id: int,
         skip: int = 0,
@@ -109,7 +102,7 @@ def read_author_books(
         raise HTTPException(
             status_code=404, detail="Author not found"
         )
-    return crud.get_books_by_author(
+    return crud.get_book_by_author(
         db=db,
         author_id=author_id,
         skip=skip,

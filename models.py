@@ -21,5 +21,5 @@ class Book(Base):
     summary = Column(String)
     publication_date = Column(Date, nullable=False)
 
-    author_id = Column(Integer, ForeignKey("authors.id"), nullable=False)
-    author = relationship("Author", back_populates="books")
+    author_id = Column(Integer, ForeignKey("authors.id"), nullable=False) #actual database connection
+    author = relationship("Author", back_populates="books") #sqlalchemy way to navigate that connection
